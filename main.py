@@ -37,7 +37,7 @@ def main(stdscr):
         stdscr.addstr(y_mid, x_mid, word[orp_ind], curses.color_pair(1))
         stdscr.addstr(y_mid, x_mid + 1, word[orp_ind + 1:])
 
-        stdscr.addstr(0, 0, ' ')
+        stdscr.addstr(int(curses.LINES-1), int(curses.COLS-1), '')
 
 
 if __name__ == '__main__':
