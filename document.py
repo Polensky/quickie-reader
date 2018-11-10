@@ -35,6 +35,6 @@ class Document:
             time.sleep(60 / self.wpm)
 
             word = next(words)
-            orp_ind = self.orp_index(word)
+            orp_ind = int(self.orp_index(word))
 
             yield (word, orp_ind)
