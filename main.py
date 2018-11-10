@@ -6,9 +6,7 @@ from curses import wrapper
 def main(stdscr):
     stdscr.nodelay(True)
     stdscr.clear()
-    wi = 4
-    cnt = 0
-    direction = 1
+    curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
     document = Document('prep.md')
     words = document.read_document()
 
@@ -16,6 +14,7 @@ def main(stdscr):
         c = stdscr.getch()
         curses.flushinp()
         stdscr.clear()
+        curses.update_lines_cols()
 
         if c == ord('q'):
             break
@@ -29,9 +28,9 @@ def main(stdscr):
         x_mid = int(curses.COLS / 2)
         y_mid = int(curses.LINES / 2)
 
-        stdscr.addstr(y_mid - 1, x_mid - 10, '-'*20)
+        stdscr.addstr(y_mid - 1, x_mid, '|', curses.color_pair(1))
         stdscr.addstr(y_mid, int(x_mid - orp_ind), word)
-        stdscr.addstr(y_mid + 1, x_mid - 10, '-'*20)
+        stdscr.addstr(y_mid + 1, x_mid, '|', curses.color_pair(1))
 
 
 if __name__ == '__main__':
