@@ -1,13 +1,14 @@
 from document import Document
+import argparse
 import curses
 import time
 from curses import wrapper
 
-def main(stdscr):
+def main(stdscr, filename):
     stdscr.nodelay(True)
     stdscr.clear()
     curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
-    document = Document('florist.txt')
+    document = Document(filename)
     words = document.read_document()
     keybind_text = "[j] Decrease WPM [k] Increase WPM [Space] Play/Pause [q] Quit"
 
@@ -45,4 +46,8 @@ def main(stdscr):
 
 
 if __name__ == '__main__':
-    wrapper(main)
+    parser = argparse.ArgumentParser(description='Read documents one word at a time')
+    parser.add_argument('filename', metavar='filename', type=str)
+    args = parser.parse_args()
+
+    wrapper(main, args.filename)
