@@ -12,7 +12,7 @@ def main(stdscr, filename):
     words = document.read_document()
     keybind_text = "[j] Decrease WPM [k] Increase WPM [Space] Play/Pause [q] Quit"
 
-    while True:
+    for word, orp_ind in words:
         c = stdscr.getch()
         curses.flushinp()
         stdscr.clear()
@@ -29,7 +29,6 @@ def main(stdscr, filename):
 
         stdscr.addstr(0, 0, f'WPM: {document.wpm} {document.state.name}')
         stdscr.addstr(int(curses.LINES - 1), 0, keybind_text)
-        word, orp_ind = next(words)
         x_mid = int(curses.COLS / 2)
         y_mid = int(curses.LINES / 2)
 
