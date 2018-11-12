@@ -9,6 +9,7 @@ def main(stdscr):
     curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
     document = Document('florist.txt')
     words = document.read_document()
+    keybind_text = "[j] Decrease WPM [k] Increase WPM [Space] Play/Pause [q] Quit"
 
     while True:
         c = stdscr.getch()
@@ -26,6 +27,7 @@ def main(stdscr):
            document.toggle_play_pause()
 
         stdscr.addstr(0, 0, f'WPM: {document.wpm} {document.state.name}')
+        stdscr.addstr(int(curses.LINES - 1), 0, keybind_text)
         word, orp_ind = next(words)
         x_mid = int(curses.COLS / 2)
         y_mid = int(curses.LINES / 2)
