@@ -1,12 +1,20 @@
 import time
 import math
+from enum import Enum
 
 
 class Document:
     """Represent the document that is being read"""
+
+    class State(Enum):
+        reading = 1
+        paused = 2
+
     def __init__(self, filename, wpm = 350):
         self.filename = filename
         self.wpm = wpm
+        self.state = self.State.reading
+
 
     def orp_index(self, word):
         """Figure out the optimal recognition point"""
@@ -31,10 +39,19 @@ class Document:
     def read_document(self):
         """Yield one word at a time with his orp index"""
         words = self.word_runner()
+        word = "press space to start"
+        orp_ind = 13
         while True:
             time.sleep(60 / self.wpm)
 
-            word = next(words)
-            orp_ind = int(self.orp_index(word))
+            if self.state == self.State.reading:
+                word = next(words)
+                orp_ind = int(self.orp_index(word))
 
             yield (word, orp_ind)
+
+    def toggle_play_pause(self):
+        if self.state == self.State.paused:
+            self.state = self.State.reading
+        else:
+            self.state = self.State.paused
