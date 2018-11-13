@@ -31,10 +31,12 @@ class Document:
         return orp - 1
 
     def word_runner(self):
+        """Reads a file and yields it line by line"""
         with open(self.filename) as doc:
-            for line in doc:
-                for word in line.split():
-                    yield word
+            text = doc.read_lines()
+        for line in text:
+            for word in line.split():
+                yield word
 
     def read_document(self):
         """Yield one word at a time with his orp index"""
