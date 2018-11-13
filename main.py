@@ -27,7 +27,7 @@ def main(stdscr, filename):
         elif c == ord(' '):
            document.toggle_play_pause()
 
-        stdscr.addstr(0, 0, f'WPM: {document.wpm} {document.state.name}')
+        stdscr.addstr(0, 0, f'WPM: {document.wpm}')
         stdscr.addstr(int(curses.LINES - 1), 0, keybind_text)
         x_mid = int(curses.COLS / 2)
         y_mid = int(curses.LINES / 2)
