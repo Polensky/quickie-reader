@@ -41,14 +41,19 @@ class Document:
         words = self.word_runner()
         word = "press space to start"
         orp_ind = 13
-        while True:
-            time.sleep(60 / self.wpm)
+        try:
+            while True:
+                time.sleep(60 / self.wpm)
 
-            if self.state == self.State.reading:
-                word = next(words)
-                orp_ind = int(self.orp_index(word))
+                if self.state == self.State.reading:
+                    word = next(words)
+                    orp_ind = int(self.orp_index(word))
 
-            yield (word, orp_ind)
+                yield (word, orp_ind)
+        except StopIteration:
+            pass
+        finally:
+            del words
 
     def toggle_play_pause(self):
         if self.state == self.State.paused:
