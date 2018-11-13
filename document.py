@@ -13,7 +13,7 @@ class Document:
 
 
     def orp_index(self, word):
-        """Figure out the optimal recognition point"""
+        """Figure out the optimal recognition point(orp)"""
         len_word = len(word)
         if len_word == 2:
             orp = 2
@@ -29,7 +29,7 @@ class Document:
     def word_runner(self):
         """Reads a file and yields it line by line"""
         with open(self.filename) as doc:
-            text = doc.read_lines()
+            text = doc.readlines()
         for line in text:
             for word in line.split():
                 yield word
