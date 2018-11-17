@@ -6,14 +6,10 @@ from enum import Enum
 class Document:
     """Represent the document that is being read"""
 
-    class State(Enum):
-        reading = 1
-        paused = 2
-
     def __init__(self, filename, wpm = 350):
         self.filename = filename
         self.wpm = wpm
-        self.state = self.State.reading
+        self.is_reading = True
 
 
     def orp_index(self, word):
@@ -47,7 +43,7 @@ class Document:
             while True:
                 time.sleep(60 / self.wpm)
 
-                if self.state == self.State.reading:
+                if self.is_reading:
                     word = next(words)
                     orp_ind = int(self.orp_index(word))
 
@@ -58,7 +54,4 @@ class Document:
             del words
 
     def toggle_play_pause(self):
-        if self.state == self.State.paused:
-            self.state = self.State.reading
-        else:
-            self.state = self.State.paused
+        self.is_reading = True if not self.is_reading else False
