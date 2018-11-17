@@ -24,7 +24,7 @@ class Document:
         else:
             orp = len_word / 2
 
-        return orp - 1
+        return int(orp - 1)
 
     def word_runner(self):
         """Reads a file and yields it line by line"""
