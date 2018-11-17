@@ -24,12 +24,12 @@ class Document:
         else:
             orp = len_word / 2
 
-        return orp - 1
+        return int(orp - 1)
 
     def word_runner(self):
         """Reads a file and yields it line by line"""
         with open(self.filename) as doc:
-            text = doc.read_lines()
+            text = doc.readlines()
         for line in text:
             for word in line.split():
                 yield word
