@@ -25,13 +25,13 @@ class CursesApp:
             if c == ord('q'):
                 break
             elif c == ord('k'):
-                document.wpm += 50
+                self.document.wpm += 50
             elif c == ord('j'):
-                document.wpm -= 50
+                self.document.wpm -= 50
             elif c == ord(' '):
-               document.toggle_play_pause()
+                self.document.toggle_play_pause()
 
-            stdscr.addstr(0, 0, f'WPM: {document.wpm}')
+            stdscr.addstr(0, 0, f'WPM: {self.document.wpm}')
             stdscr.addstr(int(curses.LINES - 1), 0, keybind_text)
             x_mid = int(curses.COLS / 2)
             y_mid = int(curses.LINES / 2)
