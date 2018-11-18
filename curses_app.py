@@ -4,6 +4,12 @@ import curses
 
 class CursesApp:
     """Curses application of quickie reader"""
+
+    KEYBIND_TEXT = "[j] Decrease WPM [k] Increase WPM [Space] Play/Pause [q] Quit"
+    HORIZONTAL_SEP = '⎯'*20
+    ORP_INDICATOR_TOP = '▼'
+    ORP_INDICATOR_BOT = '▲'
+
     def __init__(self, filename):
         self.document = Document(filename)
 
@@ -14,7 +20,6 @@ class CursesApp:
         curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
 
         words = self.document.read_document()
-        keybind_text = "[j] Decrease WPM [k] Increase WPM [Space] Play/Pause [q] Quit"
 
         for word, orp_ind in words:
             c = stdscr.getch()
@@ -32,14 +37,14 @@ class CursesApp:
                 self.document.toggle_play_pause()
 
             stdscr.addstr(0, 0, f'WPM: {self.document.wpm}')
-            stdscr.addstr(int(curses.LINES - 1), 0, keybind_text)
+            stdscr.addstr(int(curses.LINES - 1), 0, self.KEYBIND_TEXT)
             x_mid = int(curses.COLS / 2)
             y_mid = int(curses.LINES / 2)
 
-            stdscr.addstr(y_mid - 1, x_mid - 10, '-'*20)
-            stdscr.addstr(y_mid - 1, x_mid, '|', curses.color_pair(1))
-            stdscr.addstr(y_mid + 1, x_mid - 10, '-'*20)
-            stdscr.addstr(y_mid + 1, x_mid, '|', curses.color_pair(1))
+            stdscr.addstr(y_mid - 1, x_mid - 10, self.HORIZONTAL_SEP)
+            stdscr.addstr(y_mid - 1, x_mid, self.ORP_INDICATOR_TOP, curses.color_pair(1))
+            stdscr.addstr(y_mid + 1, x_mid - 10, self.HORIZONTAL_SEP)
+            stdscr.addstr(y_mid + 1, x_mid, self.ORP_INDICATOR_BOT, curses.color_pair(1))
 
             stdscr.addstr(y_mid, int(x_mid - orp_ind), word[:orp_ind])
             stdscr.addstr(y_mid, x_mid, word[orp_ind], curses.color_pair(1))
