@@ -36,15 +36,21 @@ class CursesApp:
             elif c == ord(' '):
                 self.document.toggle_play_pause()
 
-            stdscr.addstr(0, 0, f'WPM: {self.document.wpm}')
-            stdscr.addstr(int(curses.LINES - 1), 0, self.KEYBIND_TEXT)
             x_mid = int(curses.COLS / 2)
             y_mid = int(curses.LINES / 2)
 
+            info_text = f'WPM: {self.document.wpm}'
+            stdscr.addstr(curses.LINES - 3, x_mid - int(len(info_text)/2), info_text)
+
+            middle_keybind = x_mid - int((len(self.KEYBIND_TEXT)/2))
+            stdscr.addstr(int(curses.LINES - 1), middle_keybind, self.KEYBIND_TEXT)
+
             stdscr.addstr(y_mid - 1, x_mid - 10, self.HORIZONTAL_SEP)
-            stdscr.addstr(y_mid - 1, x_mid, self.ORP_INDICATOR_TOP, curses.color_pair(1))
+            stdscr.addstr(y_mid - 1, x_mid, self.ORP_INDICATOR_TOP, \
+                          curses.color_pair(1))
             stdscr.addstr(y_mid + 1, x_mid - 10, self.HORIZONTAL_SEP)
-            stdscr.addstr(y_mid + 1, x_mid, self.ORP_INDICATOR_BOT, curses.color_pair(1))
+            stdscr.addstr(y_mid + 1, x_mid, self.ORP_INDICATOR_BOT, \
+                          curses.color_pair(1))
 
             stdscr.addstr(y_mid, int(x_mid - orp_ind), word[:orp_ind])
             stdscr.addstr(y_mid, x_mid, word[orp_ind], curses.color_pair(1))
