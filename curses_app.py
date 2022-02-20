@@ -6,7 +6,8 @@ class CursesApp:
     """Curses application of quickie reader"""
 
     KEYBIND_TEXT = "[j] Decrease WPM [k] Increase WPM [Space] Play/Pause [q] Quit"
-    HORIZONTAL_SEP = '⎯'*20
+    HORIZONAL_SEP_LENGTH = 21
+    HORIZONTAL_SEP = '⎯' * HORIZONAL_SEP_LENGTH
     ORP_INDICATOR_TOP = '▼'
     ORP_INDICATOR_BOT = '▲'
 
