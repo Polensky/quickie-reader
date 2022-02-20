@@ -9,6 +9,10 @@ if __name__ == '__main__':
     parser.add_argument('filename', metavar='filename', type=str)
     args = parser.parse_args()
 
-    with open(args.filename) as handle:
+
+    try:
+        handle = open(args.filename)
         curses_app = CursesApp(handle)
-    curses_app.run()
+        curses_app.run()
+    finally:
+        handle.close()
