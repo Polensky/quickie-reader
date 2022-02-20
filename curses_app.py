@@ -1,4 +1,3 @@
-from document import Document
 import curses
 
 
@@ -16,8 +15,8 @@ class CursesApp:
     KEYBIND_TEXT = f"[j/J/k/K] Decrease/Increase WPM by {WPM_DELTA_MINOR}/{WPM_DELTA_MAJOR} [Space] Play/Pause [q] Quit"
     KEYBIND_TEXT_SEEK = f"[h/H/l/L] Seek {SEEK_MINOR}/{SEEK_MAJOR} words backward/forward"
 
-    def __init__(self, filename):
-        self.document = Document(filename)
+    def __init__(self, document):
+        self.document = document
         self.words = self.document.read_document()
 
     def application(self, stdscr):

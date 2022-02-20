@@ -4,12 +4,12 @@ import time
 class Document:
     """Represent the document that is being read"""
 
-    def __init__(self, handle, wpm=250):
+    def __init__(self, handle, wpm=250, start_word=0):
         self.handle = handle
         self.wpm = wpm
         self.is_reading = True
         self.words = []
-        self.current_word = 0
+        self.current_word = start_word
 
     def orp_index(self, word):
         """Figure out the optimal recognition point(orp)"""
