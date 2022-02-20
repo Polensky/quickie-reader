@@ -35,8 +35,8 @@ class CursesApp:
                 self.KEYBIND_TEXT_SEEK,
             )
 
-        def draw_wpm():
-            info_text = f"WPM: {self.document.wpm}"
+        def draw_info():
+            info_text = f"WPM: {self.document.wpm} Word: {self.document.current_word}"
             stdscr.addstr(curses.LINES - 4, x_mid - len(info_text) // 2, info_text)
 
         def draw_borders():
@@ -64,9 +64,8 @@ class CursesApp:
                 stdscr.clear()
                 draw_borders()
                 draw_keybind_text()
-            if redraw_needed or wpm_redraw_needed:
-                draw_wpm()
             draw_word()
+            draw_info()
             move_cursor()
 
         rows = cols = 0
@@ -85,15 +84,12 @@ class CursesApp:
             rows = curses.COLS
             cols = curses.LINES
 
-            wpm_redraw_needed = False
             if c == ord("q"):
                 break
             elif c == ord("k"):
                 self.document.wpm += 50
-                wpm_redraw_needed = True
             elif c == ord("j"):
                 self.document.wpm -= 50
-                wpm_redraw_needed = True
             elif c == ord(" "):
                 self.document.toggle_play_pause()
             elif c == ord("l"):
