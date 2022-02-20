@@ -11,7 +11,8 @@ class Document:
         self.words = []
         self.current_word = start_word
 
-    def orp_index(self, word):
+    @staticmethod
+    def orp_index(word):
         """Figure out the optimal recognition point(orp)"""
         len_word = len(word)
         if len_word == 2:
