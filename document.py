@@ -1,15 +1,13 @@
 import time
-from enum import Enum
 
 
 class Document:
     """Represent the document that is being read"""
 
-    def __init__(self, filename, wpm = 350):
+    def __init__(self, filename, wpm=350):
         self.filename = filename
         self.wpm = wpm
         self.is_reading = True
-
 
     def orp_index(self, word):
         """Figure out the optimal recognition point(orp)"""
