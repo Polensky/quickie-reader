@@ -4,7 +4,7 @@ import time
 class Document:
     """Represent the document that is being read"""
 
-    def __init__(self, handle, wpm=350):
+    def __init__(self, handle, wpm=250):
         self.handle = handle
         self.wpm = wpm
         self.is_reading = True
