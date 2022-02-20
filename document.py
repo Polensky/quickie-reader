@@ -4,8 +4,8 @@ import time
 class Document:
     """Represent the document that is being read"""
 
-    def __init__(self, filename, wpm=350):
-        self.filename = filename
+    def __init__(self, handle, wpm=350):
+        self.handle = handle
         self.wpm = wpm
         self.is_reading = True
         self.words = []
@@ -25,8 +25,7 @@ class Document:
 
     def word_runner(self):
         """Reads a file and yields it line by line"""
-        with open(self.filename) as doc:
-            text = doc.read()
+        text = self.handle.read()
         self.words = text.split()
         while self.current_word < len(self.words):
             yield self.words[self.current_word]
