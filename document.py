@@ -51,4 +51,4 @@ class Document:
             del words
 
     def toggle_play_pause(self):
-        self.is_reading = True if not self.is_reading else False
+        self.is_reading = not self.is_reading
