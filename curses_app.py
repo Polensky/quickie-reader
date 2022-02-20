@@ -5,11 +5,14 @@ import curses
 class CursesApp:
     """Curses application of quickie reader"""
 
-    KEYBIND_TEXT = "[j] Decrease WPM [k] Increase WPM [Space] Play/Pause [q] Quit"
     HORIZONAL_SEP_LENGTH = 21
     HORIZONTAL_SEP = "⎯" * HORIZONAL_SEP_LENGTH
     ORP_INDICATOR_TOP = "▼"
     ORP_INDICATOR_BOT = "▲"
+    SEEK_MINOR = 10
+    SEEK_MAJOR = 100
+    KEYBIND_TEXT = "[j] Decrease WPM [k] Increase WPM [Space] Play/Pause [q] Quit"
+    KEYBIND_TEXT_SEEK = "[h/H/l/L] Seek 10/100 words backward/forward"
 
     def __init__(self, filename):
         self.document = Document(filename)
@@ -23,12 +26,18 @@ class CursesApp:
         curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
 
         def draw_keybind_text():
-            middle_keybind = x_mid - len(self.KEYBIND_TEXT) // 2
-            stdscr.addstr(curses.LINES - 1, middle_keybind, self.KEYBIND_TEXT)
+            stdscr.addstr(
+                curses.LINES - 2, x_mid - len(self.KEYBIND_TEXT) // 2, self.KEYBIND_TEXT
+            )
+            stdscr.addstr(
+                curses.LINES - 1,
+                x_mid - len(self.KEYBIND_TEXT_SEEK) // 2,
+                self.KEYBIND_TEXT_SEEK,
+            )
 
         def draw_wpm():
             info_text = f"WPM: {self.document.wpm}"
-            stdscr.addstr(curses.LINES - 3, x_mid - len(info_text) // 2, info_text)
+            stdscr.addstr(curses.LINES - 4, x_mid - len(info_text) // 2, info_text)
 
         def draw_borders():
             stdscr.addstr(y_mid - 1, x_mid - 10, self.HORIZONTAL_SEP)
@@ -87,6 +96,14 @@ class CursesApp:
                 wpm_redraw_needed = True
             elif c == ord(" "):
                 self.document.toggle_play_pause()
+            elif c == ord("l"):
+                self.document.seek(self.SEEK_MINOR)
+            elif c == ord("L"):
+                self.document.seek(self.SEEK_MAJOR)
+            elif c == ord("h"):
+                self.document.seek(-self.SEEK_MINOR)
+            elif c == ord("H"):
+                self.document.seek(-self.SEEK_MAJOR)
 
             redraw()
 

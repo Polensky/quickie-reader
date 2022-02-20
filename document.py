@@ -8,6 +8,8 @@ class Document:
         self.filename = filename
         self.wpm = wpm
         self.is_reading = True
+        self.words = []
+        self.current_word = 0
 
     def orp_index(self, word):
         """Figure out the optimal recognition point(orp)"""
@@ -25,14 +27,15 @@ class Document:
         """Reads a file and yields it line by line"""
         with open(self.filename) as doc:
             text = doc.read()
-        for word in text.split():
-            yield word
+        self.words = text.split()
+        while self.current_word < len(self.words):
+            yield self.words[self.current_word]
+            self.current_word += 1
+
 
     def read_document(self):
         """Yield one word at a time with his orp index"""
         words = self.word_runner()
-        word = "press space to start"
-        orp_ind = 13
         try:
             while True:
                 time.sleep(60 / self.wpm)
@@ -49,3 +52,10 @@ class Document:
 
     def toggle_play_pause(self):
         self.is_reading = not self.is_reading
+
+    def seek(self, num_words):
+        self.current_word += num_words
+        if self.current_word < 0:
+            self.current_word = 0
+        elif self.current_word >= len(self.words):
+            self.current_word = len(self.words) - 1
