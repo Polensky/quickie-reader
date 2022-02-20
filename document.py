@@ -1,5 +1,4 @@
 import time
-import math
 from enum import Enum
 
 
@@ -18,13 +17,11 @@ class Document:
         if len_word == 2:
             orp = 2
         elif len_word <= 5:
-            orp = math.ceil(len_word / 2)
-        elif len_word % 2:
-            orp = math.floor(len_word / 2)
+            orp = len_word // 2 + len_word % 2
         else:
-            orp = len_word / 2
+            orp = len_word // 2
 
-        return int(orp - 1)
+        return orp - 1
 
     def word_runner(self):
         """Reads a file and yields it line by line"""
@@ -45,7 +42,7 @@ class Document:
 
                 if self.is_reading:
                     word = next(words)
-                    orp_ind = int(self.orp_index(word))
+                    orp_ind = self.orp_index(word)
 
                 yield (word, orp_ind)
         except StopIteration:
