@@ -9,6 +9,7 @@ class CursesApp:
     HORIZONTAL_SEP = "⎯" * HORIZONAL_SEP_LENGTH
     ORP_INDICATOR_TOP = "▼"
     ORP_INDICATOR_BOT = "▲"
+    WPM_DELTA = 50
     SEEK_MINOR = 10
     SEEK_MAJOR = 100
     KEYBIND_TEXT = "[j] Decrease WPM [k] Increase WPM [Space] Play/Pause [q] Quit"
@@ -87,9 +88,9 @@ class CursesApp:
             if c == ord("q"):
                 break
             elif c == ord("k"):
-                self.document.wpm += 50
+                self.document.wpm += self.WPM_DELTA
             elif c == ord("j"):
-                self.document.wpm -= 50
+                self.document.wpm -= self.WPM_DELTA
             elif c == ord(" "):
                 self.document.toggle_play_pause()
             elif c == ord("l"):
