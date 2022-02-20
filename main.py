@@ -10,5 +10,5 @@ if __name__ == '__main__':
     args = parser.parse_args()
 
     with open(args.filename) as handle:
-        curse_app = CursesApp(handle)
-    curse_app.run()
+        curses_app = CursesApp(handle)
+    curses_app.run()
