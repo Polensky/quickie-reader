@@ -52,6 +52,11 @@ class Document:
     def toggle_play_pause(self):
         self.is_reading = not self.is_reading
 
+    def change_wpm(self, delta):
+        self.wpm += delta
+        if self.wpm <= 0:
+            self.wpm = 50
+
     def seek(self, num_words):
         self.current_word += num_words
         if self.current_word < 0:

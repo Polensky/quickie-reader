@@ -9,11 +9,12 @@ class CursesApp:
     HORIZONTAL_SEP = "⎯" * HORIZONAL_SEP_LENGTH
     ORP_INDICATOR_TOP = "▼"
     ORP_INDICATOR_BOT = "▲"
-    WPM_DELTA = 50
+    WPM_DELTA_MINOR = 50
+    WPM_DELTA_MAJOR = 250
     SEEK_MINOR = 10
     SEEK_MAJOR = 100
-    KEYBIND_TEXT = "[j] Decrease WPM [k] Increase WPM [Space] Play/Pause [q] Quit"
-    KEYBIND_TEXT_SEEK = "[h/H/l/L] Seek 10/100 words backward/forward"
+    KEYBIND_TEXT = f"[j/J/k/K] Decrease/Increase WPM by {WPM_DELTA_MINOR}/{WPM_DELTA_MAJOR} [Space] Play/Pause [q] Quit"
+    KEYBIND_TEXT_SEEK = f"[h/H/l/L] Seek {SEEK_MINOR}/{SEEK_MAJOR} words backward/forward"
 
     def __init__(self, filename):
         self.document = Document(filename)
@@ -88,9 +89,13 @@ class CursesApp:
             if c == ord("q"):
                 break
             elif c == ord("k"):
-                self.document.wpm += self.WPM_DELTA
+                self.document.change_wpm(self.WPM_DELTA_MINOR)
+            elif c == ord("K"):
+                self.document.change_wpm(self.WPM_DELTA_MAJOR)
             elif c == ord("j"):
-                self.document.wpm -= self.WPM_DELTA
+                self.document.change_wpm(-self.WPM_DELTA_MINOR)
+            elif c == ord("J"):
+                self.document.change_wpm(-self.WPM_DELTA_MAJOR)
             elif c == ord(" "):
                 self.document.toggle_play_pause()
             elif c == ord("l"):
