@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from curses_app import CursesApp
 import argparse
 
