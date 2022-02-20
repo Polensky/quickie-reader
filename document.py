@@ -24,10 +24,9 @@ class Document:
     def word_runner(self):
         """Reads a file and yields it line by line"""
         with open(self.filename) as doc:
-            text = doc.readlines()
-        for line in text:
-            for word in line.split():
-                yield word
+            text = doc.read()
+        for word in text.split():
+            yield word
 
     def read_document(self):
         """Yield one word at a time with his orp index"""
