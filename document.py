@@ -56,6 +56,10 @@ class Document:
         words = self.word_runner()
         try:
             while True:
+                # Give user some time to concentrate
+                if self.current_word == 1:
+                    time.sleep(0.5)
+
                 if self.is_reading:
                     word = next(words)
                     orp_ind = self.orp_index(word)
