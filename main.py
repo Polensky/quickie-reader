@@ -17,6 +17,14 @@ if __name__ == "__main__":
         default=0,
     )
     parser.add_argument(
+        "-w",
+        "--wpm",
+        metavar="n",
+        help="Set initial WPM",
+        type=int,
+        default=250,
+    )
+    parser.add_argument(
         "-no",
         "--dont-optimize-delays",
         action="store_true",
@@ -28,6 +36,7 @@ if __name__ == "__main__":
         handle = open(args.filename)
         document = Document(
             handle,
+            wpm=args.wpm,
             start_word=args.resume - 1,
             optimize_delays=not args.dont_optimize_delays,
         )
