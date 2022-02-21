@@ -28,7 +28,7 @@ if __name__ == "__main__":
         handle = open(args.filename)
         document = Document(
             handle,
-            start_word=args.resume,
+            start_word=args.resume - 1,
             optimize_delays=not args.dont_optimize_delays,
         )
 
@@ -37,5 +37,5 @@ if __name__ == "__main__":
     finally:
         handle.close()
         print(
-            f"To resume reading from this point run with argument -r {document.current_word}"
+            f"To resume reading from this point run with argument -r {document.current_word + 1}"
         )

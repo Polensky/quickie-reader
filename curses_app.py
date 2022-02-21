@@ -41,7 +41,7 @@ class CursesApp:
             )
 
         def draw_info():
-            info_text = f"WPM: {self.document.wpm} Word: {self.document.current_word}"
+            info_text = f"WPM: {self.document.wpm} Word: {self.document.current_word + 1}"
             y_info = curses.LINES - 4
             clear_line(y_info)
             stdscr.addstr(y_info, x_mid - len(info_text) // 2, info_text)
