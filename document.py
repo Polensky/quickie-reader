@@ -8,6 +8,7 @@ class Document:
         self.handle = handle
         self.wpm = wpm
         self.is_reading = True
+        self.seek_performed = False
         self.words = []
         self.current_word = start_word
 
@@ -43,7 +44,11 @@ class Document:
                 if self.is_reading:
                     word = next(words)
                     orp_ind = self.orp_index(word)
+                elif self.seek_performed:
+                    word = self.words[self.current_word]
+                    orp_ind = self.orp_index(word)
 
+                self.seek_performed = False
                 yield (word, orp_ind)
         except StopIteration:
             pass
@@ -64,3 +69,4 @@ class Document:
             self.current_word = 0
         elif self.current_word >= len(self.words):
             self.current_word = len(self.words) - 1
+        self.seek_performed = True
