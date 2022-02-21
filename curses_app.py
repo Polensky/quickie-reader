@@ -26,6 +26,10 @@ class CursesApp:
         stdscr.clear()
         curses.init_pair(1, curses.COLOR_RED, curses.COLOR_BLACK)
 
+        def clear_line(y):
+            stdscr.move(y, 0)
+            stdscr.clrtoeol()
+
         def draw_keybind_text():
             stdscr.addstr(
                 curses.LINES - 2, x_mid - len(self.KEYBIND_TEXT) // 2, self.KEYBIND_TEXT
@@ -38,7 +42,9 @@ class CursesApp:
 
         def draw_info():
             info_text = f"WPM: {self.document.wpm} Word: {self.document.current_word}"
-            stdscr.addstr(curses.LINES - 4, x_mid - len(info_text) // 2, info_text)
+            y_info = curses.LINES - 4
+            clear_line(y_info)
+            stdscr.addstr(y_info, x_mid - len(info_text) // 2, info_text)
 
         def draw_borders():
             stdscr.addstr(y_mid - 1, x_mid - 10, self.HORIZONTAL_SEP)
@@ -51,8 +57,7 @@ class CursesApp:
             )
 
         def draw_word():
-            stdscr.move(y_mid, 0)
-            stdscr.clrtoeol()
+            clear_line(y_mid)
             stdscr.addstr(y_mid, x_mid - orp_ind, word[:orp_ind])
             stdscr.addstr(y_mid, x_mid, word[orp_ind], curses.color_pair(1))
             stdscr.addstr(y_mid, x_mid + 1, word[orp_ind + 1 :])
