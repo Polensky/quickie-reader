@@ -16,11 +16,21 @@ if __name__ == "__main__":
         type=int,
         default=0,
     )
+    parser.add_argument(
+        "-no",
+        "--dont-optimize-delays",
+        action="store_true",
+        help="Change word display time based on word's length",
+    )
     args = parser.parse_args()
 
     try:
         handle = open(args.filename)
-        document = Document(handle, start_word=args.resume)
+        document = Document(
+            handle,
+            start_word=args.resume,
+            optimize_delays=not args.dont_optimize_delays,
+        )
 
         curses_app = CursesApp(document)
         curses_app.run()

@@ -4,9 +4,10 @@ import time
 class Document:
     """Represent the document that is being read"""
 
-    def __init__(self, handle, wpm=250, start_word=0):
+    def __init__(self, handle, wpm=250, start_word=0, optimize_delays=True):
         self.handle = handle
         self.wpm = wpm
+        self.optimize_delays = optimize_delays
         self.is_reading = True
         self.seek_performed = False
         self.words = []
@@ -25,6 +26,22 @@ class Document:
 
         return orp - 1
 
+    def wait_time(self, word):
+        """Figure out optimal delay based on word length"""
+        delay = 60 / self.wpm
+        if self.optimize_delays:
+            len_word = len(word)
+            if len_word <= 2:
+                delay *= 0.75
+            elif 6 <= len_word <= 9:
+                delay *= 1.5
+            elif len_word >= 10:
+                delay *= 1.75
+            elif len_word >= 13:
+                delay *= 2
+
+        return delay
+
     def word_runner(self):
         """Reads a file and yields it line by line"""
         text = self.handle.read()
@@ -39,8 +56,6 @@ class Document:
         words = self.word_runner()
         try:
             while True:
-                time.sleep(60 / self.wpm)
-
                 if self.is_reading:
                     word = next(words)
                     orp_ind = self.orp_index(word)
@@ -50,6 +65,8 @@ class Document:
 
                 self.seek_performed = False
                 yield (word, orp_ind)
+
+                time.sleep(self.wait_time(word))
         except StopIteration:
             pass
         finally:
